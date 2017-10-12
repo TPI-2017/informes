@@ -13,7 +13,6 @@
 % Usar sans para las secciones
 \usepackage{sectsty}
 \allsectionsfont{\normalfont\sffamily\bfseries}
-\usepackage{cite}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[dvipsnames]{xcolor}
 \definecolor{azulOscuro}{rgb}{0.0, 0.28, 0.67}
@@ -47,9 +46,16 @@
 	filecolor=PineGreen,
 	urlcolor=azulOscuro,
 	linktoc=all,
-	pdftitle={Informe de proyecto 1},
-	pdfauthor={Ternouski}
+	pdftitle={Informe de proyecto 1}
 }
+\usepackage{cite}
+\usepackage{apacite}
+\bibliographystyle{apacite}
+\AtBeginDocument{
+	\renewcommand{\BBOP}{[}
+	\renewcommand{\BBCP}{]}
+}
+
 \input{init_caratula.tex}
 
 \begin{document}
@@ -71,9 +77,9 @@
 	%\clearpage
 	\phantomsection
 	% Especificar material bibliográfico utilizado como libros, apuntes, hojas de datos, referencias de la web, sitios de descarga, etc.
-	\addcontentsline{toc}{section}{Bibliografía}
-	\bibliographystyle{apalike}
-	\bibliography{biblio}
+	% \addcontentsline{toc}{section}{Bibliografía}
+	% \bibliographystyle{apalike}
+	\bibliography{biblio} 
 
 	% 8-Anexos
 	% Adjuntar todo el material que considere necesario como parte de la documentación del proyecto.
