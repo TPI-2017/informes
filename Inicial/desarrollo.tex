@@ -18,7 +18,7 @@ Por ello, este proyecto se basa en satisfacer la necesidad sin tener un impacto 
 El objetivo principal del proyecto es implementar un sistema el cual controla un cartel LED de forma remota.
 El mismo se puede subdividir en objetivos funcionales los cuales se mencionan a continuación.
 
-Diseñar e implementar el Hardware (PCB, Cartel) modularizable, para que se posible agregar módulos de LED y expandir la cantidad de caracteres en una renglón.
+Diseñar e implementar el Hardware (PCB, Cartel) modularizable, para que sea posible agregar módulos funcionales y expandir la cantidad de caracteres en una renglón.
 
 Diseñar e implementar protocolo de comunicación..
 
@@ -30,13 +30,17 @@ Desarrollar el software que controla el cartel, éste podrá ser usado dede una 
 % Enumerar los requerimientos funcionales y  no funcionales sobre los que se diseñó la solución propuesta. 
 % Especificar los aspectos funcionales que el sistema deberá cumplir respecto del usuario y su interacción con el mismo.
 
+
+
+El panel controlará la manera en que aparecen los caracteres ingresados por el usuario tales como parpadeo, velocidad de movimiento o si se desea mostrar de forma estática. Además de los caracteres disponibles que el usuario puede ingresar por teclado, que se establecen en el estándar (ver \cite{CodifChar}), se podrá ingresar caracteres personalizados mediante la selección de los LED a prender. A su vez, el panel permitirá ver el estado actual de lo que se esta mostrando en el cartel. Por otro lado se contemplará la posibilidad de restaurar cambios, para ello se incorporará botones para aplicar como también para revertir los cambios realizados.
+
 % Hablar de limites de tiempos (tiempo máximo de respuesta de conexión)
 
 \section{Diseño del hardware}
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
 % hasta llegar al detalle fino de los componentes y circuitos a utilizar y sus características.
-El cartel se componen de módulos, cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX}, entre otros componentes, logrando así una unidad funcional capas de mostrar un carácter configurado por software.
+El cartel se componen de módulos, cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219}, entre otros componentes, logrando así una unidad funcional capas de mostrar un carácter configurado por software.
 
 
 \section{Diseño de software}
