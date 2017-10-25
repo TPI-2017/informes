@@ -77,21 +77,16 @@ El protocolo está especificado en detalle en el Apéndice \ref{sec:protocolo}.
 
 
 \subsection{Panel de configuración}
-El panel de configuración consiste en una aplicación multiplataforma de escritorio escrita en QT con c++, que tiene como objetivo conectarse con el módulo NodeMCU (ESP8266) presente en el cartel a través de una conexión TLS.
-La aplicación inicia la conexión con el sistema y, una ves establecida, posee funcionalidades tales como cambiar el mensaje a mostrar, recuperar el mensaje completo que se está mostrando actualmente, cambiar opciones de animación, y modificar la red a la cual el microcontrolador se conectará la próxima vez que se reinicie.
-\subsection{Software embebido}
-El software que corre en el microcontrolador del cartel debe escuchar conexiones TLS
+El panel de configuración consiste en una aplicación multiplataforma de escritorio escrita en C++ utilizando el framework de desarrollo Qt, que tiene como objetivo conectarse con el módulo NodeMCU (ESP8266) presente en el cartel a través de una conexión TLS.
 
-%%%SACAR ESTO DESPUES
-\clearpage
+La aplicación inicia la conexión con el sistema y, una vez establecida, permite cambiar el mensaje a mostrar, recuperar el mensaje completo que se está mostrando actualmente, cambiar opciones de animación, y modificar la red a la cual el cartel se conectará la próxima vez que se reinicie.
 
 \subsection{Software embebido}
-\begin{wrapfigure}{r}{0.52\textwidth}
-    \centering
-    \includegraphics[width=0.47\textwidth]{imagenes/codificacionAscii.pdf}
-    \caption{Representación de los caracteres en el cartel.}
-    \label{fig:repAscii}
-\end{wrapfigure}
+El software que corre en el microcontrolador del cartel debe escuchar conexiones TLS, y una vez establecida una conexión iniciada por la aplicación de escritorio, debe esperar a recibir un mensaje de autenticación antes de permitir cambios del mensaje.
+
+Una vez que el usuario se autentica, el cartel espera un pedido de la aplicación de escritorio. Las interacciones posibles están descritas en el apéndice \ref{sec:protocolo}.
+
+El comportamiento del microcontrolador del cartel puede describirse como una máquina de estado finita jerárquica, como lo muestra la figura \ref{fig:fsm-micro}.
 
 \begin{figure}
 	\centering
@@ -100,6 +95,15 @@ El software que corre en el microcontrolador del cartel debe escuchar conexiones
 	\caption{Máquina de estados finitos jerárquica del manejo de conexión en el microcontrolador.}
 	
 \end{figure}
+
+\subsubsection{Almacenamiento de los caracteres}
+\begin{wrapfigure}{r}{0.52\textwidth}
+    \centering
+    \includegraphics[width=0.47\textwidth]{imagenes/codificacionAscii.pdf}
+    \caption{Representación de los caracteres en el cartel.}
+    \label{fig:repAscii}
+\end{wrapfigure}
+
 
 Los caracteres que son recibidos en el microcontrolador son codificados en mapa de bits, en el que un bit representa el estado (encendido o apagado) de un LED en particular según la posición en el que esté, para poder representarlos correctamente en la matriz. En la figura \ref{fig:repAscii} se observa un ejemplo de como esta representada la letra \enquote{A} en el mapa de bits.
 
@@ -146,6 +150,10 @@ Se escribió un programa base en el módulo ESP8266 que acepta conexiones TLS y,
 
 Se desarrolló una aplicación de escritorio, que consiste en un cliente QT, con el objetivo de probar las conexiones TLS que se utilizarán para el intercambio de información entre el usuario y el sistema.
 
+\subsection{Cronograma}
+%TODO: expandir
 El desarrollo de las actividades viene cumpliendo satisfactoriamente con los tiempos del cronograma estipulado.
 
+\subsection{Presupuesto}
+%TODO: expandir
 Hasta el momento el presupuesto invertido por los alumnos en el proyecto para el desarrollo del prototipo de un módulo funcional ronda los 500 pesos.
