@@ -73,10 +73,12 @@ La comunicación de estas dos componentes se hará a través de una red IP. El c
 
 El protocolo a utilizarse es un protocolo binario personalizado específico a esta aplicación. Para brindar seguridad y autenticación, toda transmisión se hara sobre una conexión segura TLS. 
 
-El protocolo está especificado en detalle en el Apéndice X.
+El protocolo está especificado en detalle en el Apéndice \ref{sec:protocolo}.
 
 
 \subsection{Panel de configuración}
+El panel de configuración consiste en una aplicación multiplataforma de escritorio escrita en QT con c++, que tiene como objetivo conectarse con el módulo NodeMCU (ESP8266) presente en el cartel a través de una conexión TLS.
+La aplicación inicia la conexión con el sistema y, una ves establecida, posee funcionalidades tales como cambiar el mensaje a mostrar, recuperar el mensaje completo que se está mostrando actualmente, cambiar opciones de animación, y modificar la red a la cual el microcontrolador se conectará la próxima vez que se reinicie.
 \subsection{Software embebido}
 El software que corre en el microcontrolador del cartel debe escuchar conexiones TLS
 
@@ -125,7 +127,7 @@ Se diseñó un protocolo para la comunicación entre el panel de configuración 
 
 Se desarrolló la interfaz gráfica del panel a utilizar para que el usuario configure el mensaje y otro programa que simula una matriz de 8x8 (con checkbox) y permite al usuario diseñar los caracteres a su gusto. El sistema entonces transforma el pedido del cliente a un archivo de bitmaps.
 
-Se escribió un programa base en el módulo ESP8266 que acepta conexiones TLS y, a modo de prueba, se programó para que responda haciendo "echo" a los mensajes que recibe desde el otro extremo.
+Se escribió un programa base en el módulo ESP8266 que acepta conexiones TLS y, a modo de prueba, se programó para que responda haciendo echo a los mensajes que recibe desde el otro extremo.
 
 Se desarrolló una aplicación de escritorio, que consiste en un cliente QT, con el objetivo de probar las conexiones TLS que se utilizarán para el intercambio de información entre el usuario y el sistema.
 
