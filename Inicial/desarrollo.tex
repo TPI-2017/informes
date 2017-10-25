@@ -40,7 +40,7 @@ El software compila ahre rama y agus vean esto
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
 % hasta llegar al detalle fino de los componentes y circuitos a utilizar y sus características.
-El cartel se compone de varios módulos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219}, y componentes pasivos varios, logrando así una unidad funcional independiente (ver figura \ref{fig:hw-moduloEsquematico}). 
+El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219} y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). A diferencia de un modulo esclavo, el maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite a los esclavos conectados que muestren la información.
 
 \begin{figure}[ht!]
 	\begin{center}
@@ -69,6 +69,22 @@ El MAX7219 recibe una secuencia de bytes de forma serial y los deriva a la colum
 \subsection{Panel de configuración (PC)}
 \subsection{Software embebido}
 
+%%%SACAR ESTO DESPUES
+\clearpage
+
+\subsection{Software embebido}
+\begin{wrapfigure}{r}{0.52\textwidth}
+    \centering
+    \includegraphics[width=0.47\textwidth]{imagenes/codificacionAscii.pdf}
+    \caption{Representación de los caracteres en el cartel.}
+    \label{fig:repAscii}
+\end{wrapfigure}
+
+Los caracteres que son recibidos en el microcontrolador son codificados en mapa de bits, en el que un bit representa el estado (encendido o apagado) de un LED en particular según la posición en el que esté, para poder representarlos correctamente en la matriz. En la figura \ref{fig:repAscii} se observa un ejemplo de como esta representada la letra \enquote{A} en el mapa de bits.
+
+Cada byte corresponde a una columna del carácter a mostrar y a su vez el LED inferior se codifica como el más significativo (MSB) y el superior se codifica como el menos significativo (LSB). De esta forma se envía al MAX7219 ocho bytes por cada carácter que se desea mostrar en la matriz.
+
+Por otro lado, respetando el orden en que se establecen los caracteres el estándar ISO/IEC 8859-1, se guardan en un archivo los ocho bytes de cada carácter.
 
 \section{Ensayos y mediciones}
 % Describir el proceso de construcción del prototipo y los ensayos realizados para verificar el funcionamiento del mismo.
