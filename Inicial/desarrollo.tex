@@ -27,8 +27,17 @@ Diseñar e implementar protocolo de comunicación para la comunicación entre el
 % Especificar los aspectos funcionales que el sistema deberá cumplir respecto del usuario y su interacción con el mismo.
 
 \subsection{Funcionales}
-El panel proveerá una interfaz gráfica para que el usuario pueda configurar un mensaje para el cartel, así como modificar características secundarias como parpadeo, velocidad de movimiento o estaticidad del mensaje. A través del panel, el usuario podrá ingresar por teclado el mensaje a mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}). Además, el panel permitirá relevar la configuración y el estado actual de lo que se está mostrando en el cartel. La autenticación correspondiente al ingreso al panel será verificada mediante el uso de un token de identificación.
-El cartel contará con matrices de LEDs blancos que en conjunto y sintonía formarán las letras correspondientes al mensaje a transmitir, permitiendo mostrar el mensaje configurado por el usuario. 
+\begin{itemize}
+	\item La aplicación de escritorio deberá ser capaz de poder iniciar una conexión vía TLS con el sistema utilizando la misma para enviar los mensajes que el cliente desee. Además la aplicación será multiplataforma.
+	\item La aplicación podrá enviar peticiones de forma de obtener el mensaje actual del cartel o incluso establecer uno nuevo. Por otra parte, también podrá pedir los datos de la red a la que el sistema estará conectado o cambiarlos.
+	\item La aplicación deberá ser capaz de modificar características tales como parpadeo, velocidad de movimiento o estaticidad del mensaje.
+	\item La aplicación permitirá al usuario, ingresar por teclado el mensaje que desea mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}).
+	\item El sistema (cartel) deberá ser capaz de aceptar sólo conexiones por TSL de forma que las conexiones y el intercambio de paquetes sea cifrado y seguro.
+	\item El cartel deberá poder procesar sólo mensajes a través del protocolo diseñado específicamente para este proyecto (ver Apéndice \ref{sec:protocolo})
+	\item El cartel deberá mostrar los mensajes que desee el usuario.
+	\item El cartel deberá poder almacenar y modificar sus credenciales de red de forma de poder conectarse al WiFi que el cliente desee.
+	\item El cartel deberá persistir los datos de configuración y del mensaje que muestra, aún cuando el mismo haya sido desconectado de la red o de la energía.
+\end{itemize}
 
 \subsection{No funcionales}
 \begin{itemize}
