@@ -40,6 +40,8 @@ El software compila ahre rama y agus vean esto
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
 % hasta llegar al detalle fino de los componentes y circuitos a utilizar y sus características.
+\subsection{Microcontrolador}
+\subsection{title}
 El cartel se compone de varios módulos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219}, y componentes pasivos varios, logrando así una unidad funcional independiente (ver figura \ref{fig:hw-moduloEsquematico}). 
 
 \begin{figure}[ht!]
@@ -66,8 +68,17 @@ El MAX7219 recibe una secuencia de bytes de forma serial y los deriva a la colum
 % comprender la arquitectura de software elegida (Controlada por eventos o por tiempo, apropiativa, cooperativa, etc).
 % Luego especificar las diferentes módulos (o tareas) a implementar, drivers, bibliotecas a utilizar,
 % prioridades y planificación de las distintas tareas (No incluir en el informe código C).
-\subsection{Panel de configuración (PC)}
+El sistema a nivel software consiste de la aplicación de escritorio que va a controlar el cartel y el software que corre en el microcontrolador.
+La comunicación de estas dos componentes se hará a través de una red IP. El cartel estará asociado a una red WiFi, lo cual le permitirá aceptar conexiones provinientes de hosts locales a la red o incluso externos a la red dado que está provisto el ruteo adecuado. 
+
+El protocolo a utilizarse es un protocolo binario personalizado específico a esta aplicación. Para brindar seguridad y autenticación, toda transmisión se hara sobre una conexión segura TLS. 
+
+El protocolo está especificado en detalle en el Apéndice X.
+
+
+\subsection{Panel de configuración}
 \subsection{Software embebido}
+El software que corre en el microcontrolador del cartel debe escuchar conexiones TLS
 
 
 \section{Ensayos y mediciones}
