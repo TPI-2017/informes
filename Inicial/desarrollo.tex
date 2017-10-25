@@ -123,9 +123,16 @@ Se corroboró que la implementación práctica de la matriz de LEDs usando el es
 
 Se diseñó un protocolo para la comunicación entre el panel de configuración y el cartel (ver Apéndice  \ref{sec:protocolo}).
 
-Se desarrolló la interfaz gráfica del panel a utilizar para que el usuario configure el mensaje y otro programa que simula una matriz de 8x8 (con checkbox) y permite al usuario diseñar los caracteres a su gusto. El sistema entonces transforma el pedido del cliente a un archivo de bitmaps.
+Se desarrolló la interfaz gráfica de la aplicación de escritorio a utilizar para que el usuario configure el mensaje y otro programa que simula una matriz de 8x8 y permite al usuario diseñar los caracteres a mano. Se puede ver una captura de pantalla de la aplicación de escritorio en la figura \ref{fig:screenshot-panel}.
 
-Se escribió un programa base en el módulo ESP8266 que acepta conexiones TLS y, a modo de prueba, se programó para que responda haciendo "echo" a los mensajes que recibe desde el otro extremo.
+\begin{figure}
+	\centering
+	\label{fig:screenshot-panel}
+	\includegraphics[scale=0.8]{imagenes/screenshot-panel.png}
+	\caption{Captura de pantalla de la aplicación de escritorio.}
+\end{figure}
+
+Se escribió un programa base en el módulo ESP8266 que acepta conexiones TLS y, a modo de prueba, se programó para que envíe periódicamente mensajes de prueba a quién se conecte.
 
 Se desarrolló una aplicación de escritorio, que consiste en un cliente QT, con el objetivo de probar las conexiones TLS que se utilizarán para el intercambio de información entre el usuario y el sistema.
 

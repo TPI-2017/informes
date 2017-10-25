@@ -66,10 +66,10 @@ ResponseCode puede tomar los siguientes valores:
 	\item Configuración de WiFi inválida: -4
 \end{itemize}
 
-El campo response es opcional, puede ser de tamaño nulo y su contenido depende de la interacción de la cual es respuesta. Se dice que una interacción tiene una respuesta vacía cuando el campo response está ausente. Toda interacción tiene respuesta vacía salvo que se indique lo contrario.
+El campo CONTENIDO es opcional, puede ser de tamaño nulo y su valor depende de la interacción de la cual es respuesta. Se dice que una interacción tiene una respuesta vacía cuando el campo CONTENIDO está ausente. Toda interacción tiene respuesta vacía salvo que se indique lo contrario.
 
 \subsubsection{Authenticate}
-Cuando se inicia la conexión TLS, el cliente manda la password para entrar al sistema. El servidor responde con una respuesta de OK y la conexión permanece establecida hasta que el cliente decida cerrarla. (Cerrar la conexión TLS implica primero señalizar su fin, solo hacer FIN o RST se considera como una intrusión a la conexión y es detectable por ambas partes)
+Cuando se inicia la conexión TLS, el cliente manda la contraseña para entrar al sistema. El servidor responde con una respuesta de OK y la conexión permanece establecida hasta que el cliente decida cerrarla. (Cerrar la conexión TLS implica primero señalizar su fin, solo hacer FIN o RST se considera como una intrusión a la conexión y es detectable por ambas partes)
 
 \subsubsection{SetText}
 Actualiza el mensaje del cartel con el enviado en el pedido.
@@ -84,7 +84,7 @@ Este pedido tiene el formato de la figura \ref{fig:paquete-text}.
 		\caption{Formato del pedido SetTextRequest.}
 \end{figure}
 
-El campo msg es una cadena de caracteres terminada en cero.
+En este caso el contenido del mensaje es una string terminada en cero.
 
 \subsubsection{SetAnimationParameters}
 Actualiza la configuración de la animación del cartel.
@@ -97,9 +97,9 @@ Este pedido tiene el formato de la figura \ref{fig:paquete-animparams}.
 		\caption{Formato del pedido SetAnimationParameters.}
 \end{figure}
 
-SetAnimParamsRequest.brate y SetAnimParamsRequest.srate son la frequencia de parpadeo en Hz y la velocidad de deslizamiento en píxeles por segundo.
+BRATE y SRATE son la frequencia de parpadeo en Hz y la velocidad de deslizamiento en píxeles por segundo.
 
-Se asume que si SetAnimParamsRequest.brate es cero, no se debe parpadear el contenido. De la misma forma, si SetAnimParamsRequest.srate es cero, no se debe deslizar el contenido.
+Se asume que si BRATE es cero, no se debe parpadear el contenido. De la misma forma, si SRATE es cero, no se debe deslizar el contenido.
 
 El tipo de dato ufp844 es un número en punto fijo sin signo con 4 bits de parte entera y 4 bits de parte fraccionaria. El tipo de dato sfp844 es lo mismo que ufp844 pero en complemento a dos.
 
@@ -117,7 +117,7 @@ Este pedido tiene el formato de la figura \ref{fig:paquete-wifi}.
 SSID es el nombre de la red, CONTRASEÑA es la contraseña de la red, IP es la IP que va a tomar el cartel y MÁSCARA SUBRED es la máscara de la subred.
 
 \subsubsection{GetText}
-Devuelve la estructura correspondiente a SetTextRequest con el mensaje actual del cartel.
+Devuelve la estructura correspondiente a SetText con el mensaje actual del cartel.
 Siempre retorna código de éxito.
 
 \subsubsection{GetAnimationParameters}
@@ -125,5 +125,5 @@ Devuelve la estructura correspondiente a SetAnimationParameters con la configura
 Siempre retorna código de éxito.
 
 \subsubsection{GetWifiConfiguration}
-Devuelve la estructura correspondiente a SetWifiConfigurationRequest con los datos de la red a la que el cartel está conectado y la IP que tiene en ella.
+Devuelve la estructura correspondiente a SetWifiConfiguration con los datos de la red a la que el cartel está conectado y la IP que tiene en ella.
 Siempre retorna código de éxito.
