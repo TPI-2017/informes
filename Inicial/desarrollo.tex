@@ -38,7 +38,6 @@ El cartel contará con matrices de LEDs blancos que en conjunto y sintonía form
 	\item El sistema entero no debe consumir mas de 30 Watts estando en operación normal.
 \end{itemize}
 
-
 \section{Diseño del hardware}
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
@@ -84,7 +83,7 @@ El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene u
 	\end{center}
 \end{figure}
 
-El MAX7219 recibe una secuencia de bytes de forma serial y los deriva a la columna que corresponda para cada instante en la matriz de LEDs del módulo correspondiente en el cartel. 
+El MAX7219 recibe una secuencia de bytes por serie y los deriva a la columna que corresponda para cada instante en la matriz de LEDs del módulo correspondiente en el cartel. 
 
 \section{Diseño de software}
 % Descripción del software propuesto, comenzando por un diagrama de estados, pseudocódigo o esquemas que permitan
