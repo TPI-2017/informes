@@ -55,8 +55,13 @@ Uno de los factores limitará la cantidad máxima de módulos esclavos que se pu
 \end{figure}
 
 \subsection{Microcontrolador}
+Como controlador principal se usará el kit de desarrollo NodeMCU, que integra un AI-Thinker ESP-12S, el cual contiene un SoC (\emph{System on Chip}) ESP8266EX de la empresa Espressif. El módulo NodeMCU es hardware libre, sin embargo, el resto de los componentes mencionados no lo son.\cite{NodeMCU}
 
-\subsection{Modulos}
+El chip ESP8266EX combina un microcontrolador Tensillica Xtensa L106, un RISC de 32 bits corriendo a 80 Mhz, con funcionalidad WiFi. \cite{ESP8266Datasheet} El chip tiene memoria ROM con firmware no removible, y puede correr programas almacenados en flash externa. Para poder usar todas sus funcionalidades, se debe programar sobre firmware privativo desarrollado por Espressif, esto implica que el programa de usuario corre en simultáneo con el firmware y el uso de la memoria de trabajo está sujeto a la versión del firmware. Según el datasheet, el usuario puede esperar tener disponible 50 KiB de SRAM.
+
+Como se mencionó anteriormente, se necesita de flash externa para correr programas. El módulo ESP-12S se encarga de proveer al ESP8266EX 4MiB de memoria flash.
+
+\subsection{Módulos}
 El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219} y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). A diferencia de un modulo esclavo, el maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite a los esclavos conectados que muestren la información.
 
 \begin{figure}[ht!]
@@ -115,12 +120,12 @@ El ESP8266 se puede programar utilizando el SDK de la empresa que desarrolló el
 Se decidió utilizar la versión basada en callbacks ya que elimina muchos problemas de programación concurrente al asegurar que las funciones siempre se ejecutan de forma aparentemente atómica. (salvo posiblemente por interrupciones que el firmware utiliza internamente)
 
 \subsubsection{Almacenamiento de los caracteres}
-\begin{wrapfigure}{r}{0.52\textwidth}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.47\textwidth]{imagenes/codificacionAscii.pdf}
     \caption{Representación de los caracteres en el cartel.}
     \label{fig:repAscii}
-\end{wrapfigure}
+\end{figure}
 
 
 Los caracteres que son recibidos en el microcontrolador son codificados en mapa de bits, en el que un bit representa el estado (encendido o apagado) de un LED en particular según la posición en el que esté, para poder representarlos correctamente en la matriz. En la figura \ref{fig:repAscii} se observa un ejemplo de como esta representada la letra \enquote{A} en el mapa de bits.
