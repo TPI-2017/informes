@@ -73,10 +73,12 @@ La comunicación de estas dos componentes se hará a través de una red IP. El c
 
 El protocolo a utilizarse es un protocolo binario personalizado específico a esta aplicación. Para brindar seguridad y autenticación, toda transmisión se hara sobre una conexión segura TLS. 
 
-El protocolo está especificado en detalle en el Apéndice X.
+El protocolo está especificado en detalle en el Apéndice \ref{sec:protocolo}.
 
 
 \subsection{Panel de configuración}
+El panel de configuración consiste en una aplicación multiplataforma de escritorio escrita en QT con c++, que tiene como objetivo conectarse con el módulo NodeMCU (ESP8266) presente en el cartel a través de una conexión TLS.
+La aplicación inicia la conexión con el sistema y, una ves establecida, posee funcionalidades tales como cambiar el mensaje a mostrar, recuperar el mensaje completo que se está mostrando actualmente, cambiar opciones de animación, y modificar la red a la cual el microcontrolador se conectará la próxima vez que se reinicie.
 \subsection{Software embebido}
 El software que corre en el microcontrolador del cartel debe escuchar conexiones TLS
 
@@ -90,6 +92,14 @@ El software que corre en el microcontrolador del cartel debe escuchar conexiones
     \caption{Representación de los caracteres en el cartel.}
     \label{fig:repAscii}
 \end{wrapfigure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.8]{imagenes/fsm-micro.pdf}
+	\label{fig:fsm-micro}
+	\caption{Máquina de estados finitos jerárquica del manejo de conexión en el microcontrolador.}
+	
+\end{figure}
 
 Los caracteres que son recibidos en el microcontrolador son codificados en mapa de bits, en el que un bit representa el estado (encendido o apagado) de un LED en particular según la posición en el que esté, para poder representarlos correctamente en la matriz. En la figura \ref{fig:repAscii} se observa un ejemplo de como esta representada la letra \enquote{A} en el mapa de bits.
 
