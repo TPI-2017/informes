@@ -93,8 +93,11 @@ El comportamiento del microcontrolador del cartel puede describirse como una má
 	\includegraphics[scale=0.8]{imagenes/fsm-micro.pdf}
 	\label{fig:fsm-micro}
 	\caption{Máquina de estados finitos jerárquica del manejo de conexión en el microcontrolador.}
-	
 \end{figure}
+
+El ESP8266 se puede programar utilizando el SDK de la empresa que desarrolló el chip, Espressif. Existen dos versiones del SDK, una basada en FreeRTOS, lo cual permite tener tareas en ejecución simultánea, y otra que no está basada en tareas, sino que todo el código del usuario consiste en callbacks que se ejecutan de forma cooperativa y deben retornar rápidamente.
+
+Se decidió utilizar la versión basada en callbacks ya que elimina muchos problemas de programación concurrente al asegurar que las funciones siempre se ejecutan de forma aparentemente atómica. (salvo posiblemente por interrupciones que el firmware utiliza internamente)
 
 \subsubsection{Almacenamiento de los caracteres}
 \begin{wrapfigure}{r}{0.52\textwidth}
