@@ -40,7 +40,22 @@ El software compila ahre rama y agus vean esto
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
 % hasta llegar al detalle fino de los componentes y circuitos a utilizar y sus características.
+El hardware está compuesto por módulos. Cada módulo es un dispositivo independiente que está armado con una matriz de LEDs de 8x8, un chip shifteador \cite{MAX7219} y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). 
+
+Hay dos tipos de módulos: un maestro y un esclavo. El módulo maestro tiene adentro, además de lo listado anteriormente, un microcontrolador, regulador de tensión y un conector expuesto al usuario. Cada módulo esclavo no tiene un microcontrolador, y en cambio dos conectores en vez de uno, con la idea de que puedan conectarse varios esclavos en \emph{daisy-chain}, como se ilustra en la figura \ref{fig:esquema-general}.
+
+Uno de los factores limitará la cantidad máxima de módulos esclavos que se pueden conectar será el amperaje máximo de la fuente de tensión y el regulador que se utilice en el módulo maestro.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[scale=1]{imagenes/hw/esquema-general.pdf}
+		\caption{Esquema general del sistema}
+		\label{fig:esquema-general}
+	\end{center}
+\end{figure}
+
 \subsection{Microcontrolador}
+
 \subsection{Modulos}
 El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219} y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). A diferencia de un modulo esclavo, el maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite a los esclavos conectados que muestren la información.
 
