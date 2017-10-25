@@ -84,15 +84,17 @@ Se desarrolló un prototipo de uno de los módulos funcionales del cartel, conec
 % 3- Evaluar y destacar correcciones o desvíos del cronograma de tareas presentado en el informe de inicial.
 % 4-Analizar el presupuesto invertido y corregir (si corresponde) el presupuesto final del proyecto. 
 
+Se planteó el esquema de hardware y se desarrolló el primer prototipo del módulo funcional.
+
 Se corroboró que la implementación práctica de la matriz de LEDs usando el esquema planteado originalmente permite mostrar correctamente el mensaje que el usuario disponga.
 
-Se diseñó un protocolo para la comunicación entre el panel de configuración y el cartel.
+Se diseñó un protocolo para la comunicación entre el panel de configuración y el cartel (ver Apéndice B).
 
-Nahuel Ternouski y Santiago Levy plantearon el esquema de hardware y desarrollaron el prototipo del módulo funcional.
+Se desarrolló la interfaz gráfica del panel a utilizar para que el usuario configure el mensaje y otro programa que simula una matriz de 8x8 (con checkbox) y permite al usuario diseñar los caracteres a su gusto. El sistema entonces transforma el pedido del cliente a un archivo de bitmaps.
 
-% Agustín García y Ramiro Romero Dapozo desarrollaron algo qcyo
+Se escribió un programa base en el módulo ESP8266 que acepta conexiones TLS y, a modo de prueba, se programó para que responda haciendo "echo" a los mensajes que recibe desde el otro extremo.
 
-Nahuel Ternouski y Ramiro Romero Dapozo desarrollaron la interfaz del panel a utilizar para que el usuario configure el mensaje.
+Se desarrolló una aplicación de escritorio, que consiste en un cliente QT, con el objetivo de probar las conexiones TLS que se utilizarán para el intercambio de información entre el usuario y el sistema.
 
 El desarrollo de las actividades viene cumpliendo satisfactoriamente con los tiempos del cronograma estipulado.
 
