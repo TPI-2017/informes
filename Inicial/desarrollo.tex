@@ -12,25 +12,23 @@ Surge así la idea de desarrollar de un cartel electrónico reutilizable, capaz 
 % (primarios y secundarios) se hayan cumplido o no (en las conclusiones se deberá contemplar
 % el cambio de objetivos o el grado de cumplimiento de los mismos).
 El objetivo principal del proyecto es implementar un cartel de LEDs que pueda ser configurado remotamente por un usuario.
-El mismo se puede subdividir en objetivos funcionales, los cuales se mencionan a continuación:
+El mismo se puede subdividir en subobjetivos, los cuales se mencionan a continuación:
 
 Diseñar e implementar el Hardware (PCB, matrices de LEDs) del cartel para que visualice correctamente el mensaje configurado. Deberá ser modularizable, es decir, que sea posible agregar módulos funcionales y expandir la cantidad de caracteres en un renglón.
 
-Diseñar e implementar protocolo de comunicación..
-
-Desarrollar el software que se ejecutará en el microcontrolador..
-
-Desarrollar una forma de autenticación que impida el acceso de personal no autorizado al software de configuración del cartel.
+Desarrollar el software embebido que se ejecutará en el microcontrolador.
 
 Desarrollar el software que controla el cartel. Éste podrá ser usado desde una pc y tendrá una interfaz gráfica con formato de panel para controlar las características del mensaje a mostrar por el cartel.
 
+Diseñar e implementar protocolo de comunicación para la comunicación entre el software controlador del panel y el cartel. El protocolo debe establecer un método de autenticación que impida el acceso de personal no autorizado al cartel. Esto implica que sea seguro antes ataque del tipo \emph{man-in-the-middle} y otros tipos de ataques bien conocidos.
+
 \section{Análisis de requerimientos}
-% Enumerar los requerimientos funcionales y  no funcionales sobre los que se diseñó la solución propuesta. 
+% Enumerar los requerimientos funcionales y  no funcionales sobre los que se diseñó la solución propuesta.
 % Especificar los aspectos funcionales que el sistema deberá cumplir respecto del usuario y su interacción con el mismo.
 
 
 
-El panel proveerá una interfaz gráfica para que el usuario pueda configurar un mensaje para el cartel, así como modificar características secundarias como parpadeo, velocidad de movimiento o estaticidad del mensaje. A través del panel, el usuario podrá ingresar pore teclado el mensaje a mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}). Además, el panel permitirá relevar la configuración y el estado actual de lo que se está mostrando en el cartel. La autenticación correspondiente al ingreso al panel sera verificada mediante el uso de un token de identificación.
+El panel proveerá una interfaz gráfica para que el usuario pueda configurar un mensaje para el cartel, así como modificar características secundarias como parpadeo, velocidad de movimiento o estaticidad del mensaje. A través del panel, el usuario podrá ingresar pore teclado el mensaje a mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}). Además, el panel permitirá relevar la configuración y el estado actual de lo que se está mostrando en el cartel. La autenticación correspondiente al ingreso al panel será verificada mediante el uso de un token de identificación.
 
 El cartel contará con matrices de LEDs blancos que en conjunto y sintonía formarán las letras correspondientes al mensaje a transmitir, permitiendo mostrar el mensaje configurado por el usuario. 
 
@@ -68,6 +66,9 @@ El MAX7219 recibe una secuencia de bytes de forma serial y los deriva a la colum
 % comprender la arquitectura de software elegida (Controlada por eventos o por tiempo, apropiativa, cooperativa, etc).
 % Luego especificar las diferentes módulos (o tareas) a implementar, drivers, bibliotecas a utilizar,
 % prioridades y planificación de las distintas tareas (No incluir en el informe código C).
+\subsection{Panel de configuración (PC)}
+\subsection{Software embebido}
+
 
 \section{Ensayos y mediciones}
 % Describir el proceso de construcción del prototipo y los ensayos realizados para verificar el funcionamiento del mismo.
@@ -83,13 +84,13 @@ Se desarrolló un prototipo de uno de los módulos funcionales del cartel, conec
 % 3- Evaluar y destacar correcciones o desvíos del cronograma de tareas presentado en el informe de inicial.
 % 4-Analizar el presupuesto invertido y corregir (si corresponde) el presupuesto final del proyecto. 
 
-Se corroboró que la implementación práctica del esquema planteado originalmente permite mostrar correctamente el mensaje que el usuario disponga.
+Se corroboró que la implementación práctica de la matriz de LEDs usando el esquema planteado originalmente permite mostrar correctamente el mensaje que el usuario disponga.
 
-aca hablen de software 
+Se diseñó un protocolo para la comunicación entre el panel de configuración y el cartel.
 
 Nahuel Ternouski y Santiago Levy plantearon el esquema de hardware y desarrollaron el prototipo del módulo funcional.
 
-Agustín García y Ramiro Romero Dapozo desarrollaron algo qcyo
+% Agustín García y Ramiro Romero Dapozo desarrollaron algo qcyo
 
 Nahuel Ternouski y Ramiro Romero Dapozo desarrollaron la interfaz del panel a utilizar para que el usuario configure el mensaje.
 
