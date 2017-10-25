@@ -28,7 +28,7 @@ Diseñar e implementar protocolo de comunicación para la comunicación entre el
 
 
 
-El panel proveerá una interfaz gráfica para que el usuario pueda configurar un mensaje para el cartel, así como modificar características secundarias como parpadeo, velocidad de movimiento o estaticidad del mensaje. A través del panel, el usuario podrá ingresar pore teclado el mensaje a mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}). Además, el panel permitirá relevar la configuración y el estado actual de lo que se está mostrando en el cartel. La autenticación correspondiente al ingreso al panel será verificada mediante el uso de un token de identificación.
+El panel proveerá una interfaz gráfica para que el usuario pueda configurar un mensaje para el cartel, así como modificar características secundarias como parpadeo, velocidad de movimiento o estaticidad del mensaje. A través del panel, el usuario podrá ingresar por teclado el mensaje a mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}). Además, el panel permitirá relevar la configuración y el estado actual de lo que se está mostrando en el cartel. La autenticación correspondiente al ingreso al panel será verificada mediante el uso de un token de identificación.
 
 El cartel contará con matrices de LEDs blancos que en conjunto y sintonía formarán las letras correspondientes al mensaje a transmitir, permitiendo mostrar el mensaje configurado por el usuario. 
 
@@ -101,6 +101,17 @@ El panel de configuración consiste en una aplicación multiplataforma de escrit
 
 La aplicación inicia la conexión con el sistema y, una vez establecida, permite cambiar el mensaje a mostrar, recuperar el mensaje completo que se está mostrando actualmente, cambiar opciones de animación, y modificar la red a la cual el cartel se conectará la próxima vez que se reinicie.
 
+En la figura \ref{fig:screenshot-panel} se observa una captura de pantalla de la aplicación de escritorio.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\centering
+		\label{fig:screenshot-panel}
+		\includegraphics[scale=0.8]{imagenes/screenshot-panel.png}
+		\caption{Captura de pantalla de la aplicación de escritorio.}
+	\end{center}
+\end{figure}
+
 \subsection{Software embebido}
 El software que corre en el microcontrolador del cartel debe escuchar conexiones TLS, y una vez establecida una conexión iniciada por la aplicación de escritorio, debe esperar a recibir un mensaje de autenticación antes de permitir cambios del mensaje.
 
@@ -108,11 +119,13 @@ Una vez que el usuario se autentica, el cartel espera un pedido de la aplicació
 
 El comportamiento del microcontrolador del cartel puede describirse como una máquina de estado finita jerárquica, como lo muestra la figura \ref{fig:fsm-micro}.
 
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.8]{imagenes/fsm-micro.pdf}
-	\label{fig:fsm-micro}
-	\caption{Máquina de estados finitos jerárquica del manejo de conexión en el microcontrolador.}
+\begin{figure}[ht!]
+	\begin{center}
+		\centering
+		\includegraphics[scale=0.8]{imagenes/fsm-micro.pdf}
+		\label{fig:fsm-micro}
+		\caption{Máquina de estados finitos jerárquica del manejo de conexión en el microcontrolador.}
+	\end{center}
 \end{figure}
 
 El ESP8266 se puede programar utilizando el SDK de la empresa que desarrolló el chip, Espressif. Existen dos versiones del SDK, una basada en FreeRTOS, lo cual permite tener tareas en ejecución simultánea, y otra que no está basada en tareas, sino que todo el código del usuario consiste en callbacks que se ejecutan de forma cooperativa y deben retornar rápidamente.
@@ -161,13 +174,6 @@ Se corroboró que la implementación práctica de la matriz de LEDs usando el es
 Se diseñó un protocolo para la comunicación entre el panel de configuración y el cartel (ver Apéndice  \ref{sec:protocolo}).
 
 Se desarrolló la interfaz gráfica de la aplicación de escritorio a utilizar para que el usuario configure el mensaje y otro programa que simula una matriz de 8x8 y permite al usuario diseñar los caracteres a mano. Se puede ver una captura de pantalla de la aplicación de escritorio en la figura \ref{fig:screenshot-panel}.
-
-\begin{figure}
-	\centering
-	\label{fig:screenshot-panel}
-	\includegraphics[scale=0.8]{imagenes/screenshot-panel.png}
-	\caption{Captura de pantalla de la aplicación de escritorio.}
-\end{figure}
 
 Se escribió un programa base en el módulo ESP8266 que acepta conexiones TLS y, a modo de prueba, se programó para que envíe periódicamente mensajes de prueba a quién se conecte.
 
