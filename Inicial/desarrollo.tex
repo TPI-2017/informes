@@ -27,17 +27,17 @@ Diseñar e implementar protocolo de comunicación para la comunicación entre el
 % Especificar los aspectos funcionales que el sistema deberá cumplir respecto del usuario y su interacción con el mismo.
 
 \subsection{Funcionales}
-
-\subsection{No funcionales}
-
-
 El panel proveerá una interfaz gráfica para que el usuario pueda configurar un mensaje para el cartel, así como modificar características secundarias como parpadeo, velocidad de movimiento o estaticidad del mensaje. A través del panel, el usuario podrá ingresar por teclado el mensaje a mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}). Además, el panel permitirá relevar la configuración y el estado actual de lo que se está mostrando en el cartel. La autenticación correspondiente al ingreso al panel será verificada mediante el uso de un token de identificación.
-
 El cartel contará con matrices de LEDs blancos que en conjunto y sintonía formarán las letras correspondientes al mensaje a transmitir, permitiendo mostrar el mensaje configurado por el usuario. 
 
-El software compila ahre rama y agus vean esto
+\subsection{No funcionales}
+\begin{itemize}
+	\item El tiempo de desarrollo no debe ser mayor a seis semanas.
+	\item El tiempo de respuesta del cartel no debe exceder los cinco segundos.
+	\item La conexión debe estar cifrada para evitar intrusiones.
+	\item El sistema entero no debe consumir mas de 30 Watts estando en operación normal.
+\end{itemize}
 
-% Hablar de limites de tiempos (tiempo máximo de respuesta de conexión)
 
 \section{Diseño del hardware}
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
