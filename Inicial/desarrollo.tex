@@ -1,30 +1,28 @@
 \section{Introducción}
 % Especificar la motivación y las características principales del proyecto como así también un marco general
 % sobre el estado del arte de la tecnología y el uso de las ideas o conceptos del proyecto propuesto.
-Informar a las personas de hechos que sucedieron o sucederán en un ámbito especifico es una necesidad por parte de la sociedad en la que vivimos. Ya que tomamos decisiones según la información que obtenemos a través de los medios de comunicación.
+En el ámbito universitario resulta necesario mantener informadas a las personas sobre una amplia variedad de hechos, noticias y acontecimientos que sucedieron o sucederán, desde la ubicación de un aula hasta la notificación de la cancelación de una clase. Muchas veces estas notificaciones son sobre cuestiones muy efímeras, lo que requiere rapidez para empezar a transmitirlas y facilidad para tener el alcance necesario.
 
-En las facultades de la UNLP se consume muchos recursos para cumplir este fin como ser afiches, pancartas, panfletos, etc. los cuales no tiene una vida útil prolongada. Actualmente no se tiene en cuenta el impacto ambiental que genera esta forma de comunicación.
-Así mismo, el material en cuestión (mayormente papel) se desecha ya que no hay una forma de reutilizarlo, aumentando la cantidad de basura notablemente.
+En las facultades de la Universidad Nacional de La Plata se consumen muchos recursos para cumplir este fin, a través de afiches, pancartas, panfletos, etc. los cuales, pese a ser de barata fabricación, no tienen una vida útil muy extensa. Además todas estas formas de comunicacion se basan en el uso de papel, que tras ser utilizado debe desecharse debido a la imposibilidad de reutilizarlo, generando una cantidad de residuos significativa. Si se tiene en cuenta que también generan una polución visual considerable, por la gran cantidad de estos distribuidos en todos los lugares transitables, resulta prudente considerar una nueva forma de comunicación.
 
-Además, el inconveniente de los afiches en las facultades no solo es ambiental, sino que presenta una polución visual considerable, por la gran cantidad de estos distribuidos en todos los lugares transitables.
-
-Partiendo de este hecho, la forma de comunicación debe ser más limpia acorde a forma de mostrar la información.
-Por ello, este proyecto se basa en satisfacer la necesidad sin tener un impacto ambiental negativo.
+Surge así la idea de desarrollar de un cartel electrónico reutilizable, capaz de ser configurado remotamente por las autoridades competentes, con el fin de proveer una forma de comunicación masiva más limpia, clara y menos dañina para el medio ambiente. 
 
 \section{Objetivos del proyecto}
 % Deben especificarse los objetivos que se plantearon en el informe inicial
 % (primarios y secundarios) se hayan cumplido o no (en las conclusiones se deberá contemplar
 % el cambio de objetivos o el grado de cumplimiento de los mismos).
-El objetivo principal del proyecto es implementar un sistema el cual controla un cartel LED de forma remota.
-El mismo se puede subdividir en objetivos funcionales los cuales se mencionan a continuación.
+El objetivo principal del proyecto es implementar un cartel de LEDs que pueda ser configurado remotamente por un usuario.
+El mismo se puede subdividir en objetivos funcionales, los cuales se mencionan a continuación:
 
-Diseñar e implementar el Hardware (PCB, Cartel) modularizable, para que sea posible agregar módulos funcionales y expandir la cantidad de caracteres en una renglón.
+Diseñar e implementar el Hardware (PCB, matrices de LEDs) del cartel para que visualice correctamente el mensaje configurado. Deberá ser modularizable, es decir, que sea posible agregar módulos funcionales y expandir la cantidad de caracteres en un renglón.
 
 Diseñar e implementar protocolo de comunicación..
 
 Desarrollar el software que se ejecutará en el microcontrolador..
 
-Desarrollar el software que controla el cartel, éste podrá ser usado dede una pc y tendrá características de un panel para controlar la funcionalidad.
+Desarrollar una forma de autenticación que impida el acceso de personal no autorizado al software de configuración del cartel.
+
+Desarrollar el software que controla el cartel. Éste podrá ser usado desde una pc y tendrá una interfaz gráfica con formato de panel para controlar las características del mensaje a mostrar por el cartel.
 
 \section{Análisis de requerimientos}
 % Enumerar los requerimientos funcionales y  no funcionales sobre los que se diseñó la solución propuesta. 
@@ -32,7 +30,11 @@ Desarrollar el software que controla el cartel, éste podrá ser usado dede una 
 
 
 
-El panel controlará la manera en que aparecen los caracteres ingresados por el usuario tales como parpadeo, velocidad de movimiento o si se desea mostrar de forma estática. Además de los caracteres disponibles que el usuario puede ingresar por teclado, que se establecen en el estándar (ver \cite{CodifChar}), se podrá ingresar caracteres personalizados mediante la selección de los LED a prender. A su vez, el panel permitirá ver el estado actual de lo que se esta mostrando en el cartel. Por otro lado se contemplará la posibilidad de restaurar cambios, para ello se incorporará botones para aplicar como también para revertir los cambios realizados.
+El panel proveerá una interfaz gráfica para que el usuario pueda configurar un mensaje para el cartel, así como modificar características secundarias como parpadeo, velocidad de movimiento o estaticidad del mensaje. A través del panel, el usuario podrá ingresar pore teclado el mensaje a mostrar mediante los caracteres que se establecen en el estándar (ver \cite{CodifChar}). Además, el panel permitirá relevar la configuración y el estado actual de lo que se está mostrando en el cartel. La autenticación correspondiente al ingreso al panel sera verificada mediante el uso de un token de identificación.
+
+El cartel contará con matrices de LEDs blancos que en conjunto y sintonía formarán las letras correspondientes al mensaje a transmitir, permitiendo mostrar el mensaje configurado por el usuario. 
+
+El software compila ahre rama y agus vean esto
 
 % Hablar de limites de tiempos (tiempo máximo de respuesta de conexión)
 
@@ -40,8 +42,26 @@ El panel controlará la manera en que aparecen los caracteres ingresados por el 
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
 % hasta llegar al detalle fino de los componentes y circuitos a utilizar y sus características.
-El cartel se componen de módulos, cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219}, entre otros componentes, logrando así una unidad funcional capas de mostrar un carácter configurado por software.
+El cartel se compone de varios módulos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219}, y componentes pasivos varios, logrando así una unidad funcional independiente (ver figura \ref{fig:hw-moduloEsquematico}). 
 
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{imagenes/hw/moduloEsquematico}
+		\caption{Esquema de conexiones de un módulo funcional.}
+		\label{fig:hw-moduloEsquematico}
+	\end{center}
+\end{figure}
+
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.7\textwidth]{imagenes/hw/moduloLED}
+		\caption{Esquema de conexiones de un módulo funcional.}
+		\label{fig:hw-moduloLED}
+	\end{center}
+\end{figure}
+
+El MAX7219 recibe una secuencia de bytes de forma serial y los deriva a la columna que corresponda para cada instante en la matriz de LEDs del módulo correspondiente en el cartel. 
 
 \section{Diseño de software}
 % Descripción del software propuesto, comenzando por un diagrama de estados, pseudocódigo o esquemas que permitan
@@ -53,6 +73,8 @@ El cartel se componen de módulos, cada módulo contiene una matriz de LED 8x8, 
 % Describir el proceso de construcción del prototipo y los ensayos realizados para verificar el funcionamiento del mismo.
 % Mostrar mediciones o resultados obtenidos en forma de tablas, figuras, 
 % fotografías del sistema, pantallas de osciloscopios, pantallas de display, etc
+Se desarrolló un prototipo de uno de los módulos funcionales del cartel, conectando los componentes sobre un protoboard y soldando una matriz de LEDs con la disposición a utilizar en el modelo final (ver Figura \ref{fig:hw-moduloLED}). A través del mismo se hicieron pruebas para corroborar el correcto funcionamiento particular de un módulo funcional y la claridad del carácter mostrado. Se corroboró que el mensaje comienza a mostrarse pocos instantes después de que el mismo empieza a ser recibido por el cartel. También se puso a prueba la tensión máxima soportada por los LEDs utilizados, los cuales demostraron la capacidad de soportar hasta 4,2 V de tensión con una corriente continua de 20 mA. En dicho prototipo se usaron resistencias que diferían levemente de las planteadas en el esquema original debido a problemas de disponibilidad de las mismas, confirmando que el módulo funciona correctamente con un margen de tolerancia para los valores de tensión y corriente en los LEDs. El prototipo también permitió confirmar que el sistema puede prescindir de un disipador térmico ya que los componentes no levantan una temperatura considerable, aún después de un funcionamiento prolongado.
+
 
 \section{Conclusiones parciales}
 % 1-Explicar el grado de avance de los objetivos planteados hasta el momento como así también el trabajo a seguir.
@@ -60,3 +82,17 @@ El cartel se componen de módulos, cada módulo contiene una matriz de LED 8x8, 
 %	y re-estimar las horas de ingeniería restantes.
 % 3- Evaluar y destacar correcciones o desvíos del cronograma de tareas presentado en el informe de inicial.
 % 4-Analizar el presupuesto invertido y corregir (si corresponde) el presupuesto final del proyecto. 
+
+Se corroboró que la implementación práctica del esquema planteado originalmente permite mostrar correctamente el mensaje que el usuario disponga.
+
+aca hablen de software 
+
+Nahuel Ternouski y Santiago Levy plantearon el esquema de hardware y desarrollaron el prototipo del módulo funcional.
+
+Agustín García y Ramiro Romero Dapozo desarrollaron algo qcyo
+
+Nahuel Ternouski y Ramiro Romero Dapozo desarrollaron la interfaz del panel a utilizar para que el usuario configure el mensaje.
+
+El desarrollo de las actividades viene cumpliendo satisfactoriamente con los tiempos del cronograma estipulado.
+
+Hasta el momento el presupuesto invertido por los alumnos en el proyecto para el desarrollo del prototipo de un módulo funcional ronda los 500 pesos.
