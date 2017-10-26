@@ -70,7 +70,7 @@ Como controlador principal se usará el kit de desarrollo NodeMCU, que integra u
 
 El chip ESP8266EX combina un microcontrolador Tensillica Xtensa L106, un RISC de 32 bits corriendo a 80 Mhz, con funcionalidad WiFi. \cite{ESP8266Datasheet} El chip tiene memoria ROM con firmware no removible, y puede correr programas almacenados en flash externa. Para poder usar todas sus funcionalidades, se debe programar sobre firmware privativo desarrollado por Espressif, esto implica que el programa de usuario corre en simultáneo con el firmware y el uso de la memoria de trabajo está sujeto a la versión del firmware. Según el datasheet, el usuario puede esperar tener disponible 50 KiB de SRAM.
 
-Como se mencionó anteriormente, se necesita de flash externa para correr programas. El módulo ESP-12S se encarga de proveer al ESP8266EX 4MiB de memoria flash.
+Como se mencionó anteriormente, se necesita de flash externa para correr programas. El módulo ESP-12S se encarga de proveer al ESP8266EX 4 MiB de memoria flash.
 
 \subsection{Módulos}
 El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219} y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). A diferencia de un modulo esclavo, el maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite a los esclavos conectados que muestren la información.
@@ -92,7 +92,7 @@ El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene u
 	\end{center}
 \end{figure}
 
-El MAX7219 recibe una secuencia de bytes por serie y los deriva a la columna que corresponda para cada instante en la matriz de LEDs del módulo correspondiente en el cartel. 
+El MAX7219 recibe una secuencia de bytes (desde otro esclavo o del master) por serie y los deriva a la columna que corresponda para cada instante en la matriz de LEDs de su modulo. 
 
 \section{Diseño de software}
 % Descripción del software propuesto, comenzando por un diagrama de estados, pseudocódigo o esquemas que permitan
