@@ -30,18 +30,18 @@ Diseñar e implementar protocolo de comunicación para la comunicación entre el
 \begin{itemize}
 	\item La aplicación de escritorio deberá ser capaz de poder iniciar una conexión vía TLS con el sistema utilizando la misma para enviar los mensajes que el cliente desee. Además la aplicación será multiplataforma.
 	\item La aplicación podrá enviar peticiones de forma de obtener el mensaje actual del cartel o incluso establecer uno nuevo. Por otra parte, también podrá pedir los datos de la red a la que el sistema estará conectado o cambiarlos.
-	\item La aplicación deberá ser capaz de modificar características tales como parpadeo, velocidad de movimiento o estaticidad del mensaje.
+	\item La aplicación deberá ser capaz de modificar características tales como parpadeo (intermitencia distinguible por el ojo humano), velocidad de movimiento (tasa de pixeles por segundo que se moverá el texto cuando éste esté configurado para mostrarse desplazándose) o estaticidad (capacidad de mostrar un mensaje en su lugar sin moverlo) del mensaje.
 	\item La aplicación permitirá al usuario, ingresar por teclado el mensaje que desea mostrar mediante los caracteres que se establecen en el estándar de codificación de caracteres ISO/IEC 8859-1 (ver \cite{CodifChar}).
 	\item El sistema (cartel) deberá ser capaz de aceptar sólo conexiones por TLS\cite{TLS} de forma que las conexiones y el intercambio de paquetes sea cifrado y seguro.
 	\item El cartel deberá poder procesar sólo mensajes a través del protocolo diseñado específicamente para este proyecto (ver Apéndice \ref{sec:protocolo})
 	\item El cartel deberá mostrar los mensajes que desee el usuario.
 	\item El cartel deberá poder almacenar y modificar sus credenciales de red de forma de poder conectarse al WiFi que el cliente desee.
-	\item El cartel deberá persistir los datos de configuración y del mensaje que muestra, aún cuando el mismo haya sido desconectado de la red o de la energía.
+	\item El cartel deberá persistir los datos de configuración y del mensaje que muestra, aún cuando el mismo haya sido desconectado de la red inalámbrica o de la energía.
 \end{itemize}
 
 \subsection{No funcionales}
 \begin{itemize}
-	\item El tiempo de desarrollo no debe ser mayor a seis semanas.
+	\item El tiempo de desarrollo no debe ser mayor a 12 semanas.
 	\item El tiempo de respuesta del cartel no debe exceder los cinco segundos.
 	\item La conexión debe estar cifrada para evitar intrusiones.
 	\item El sistema entero no debe consumir mas de 30 Watts estando en operación normal.
@@ -51,11 +51,11 @@ Diseñar e implementar protocolo de comunicación para la comunicación entre el
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
 % hasta llegar al detalle fino de los componentes y circuitos a utilizar y sus características.
-El hardware está compuesto por módulos. Cada módulo es un dispositivo independiente que está armado con una matriz de LEDs de 8x8, un chip shifteador \cite{MAX7219} y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). 
+El hardware está compuesto por módulos. Cada módulo es un dispositivo independiente que está armado con una matriz de LEDs de 8x8, un chip controlador \cite{MAX7219} encargado de actualizar el estado de cada LED en función del caracter mostrado y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). 
 
-Hay dos tipos de módulos: un maestro y un esclavo. El módulo maestro tiene adentro, además de lo listado anteriormente, un microcontrolador, regulador de tensión y un conector expuesto al usuario. Cada módulo esclavo no tiene un microcontrolador, y en cambio dos conectores en vez de uno, con la idea de que puedan conectarse varios esclavos en \emph{daisy-chain}, como se ilustra en la figura \ref{fig:esquema-general}.
+Hay dos tipos de módulos: un maestro y un esclavo. El módulo maestro cuenta con un microcontrolador, reguladores de tensión, un conector expuesto al usuario y teclas de reset de comunicación (reinicia la configuracion Wi-Fi) y de alimentación (reinicia la alimentación del microcontrolador). Los módulos esclavos no llevan microcontrolador, sino que en cambio cuentan con dos conectores (uno de entrada y uno de salida) para poder conectar secuencialmente varios esclavos en \emph{daisy-chain}, como se ilustra en la figura \ref{fig:esquema-general}.
 
-Uno de los factores limitará la cantidad máxima de módulos esclavos que se pueden conectar será el amperaje máximo de la fuente de tensión y el regulador que se utilice en el módulo maestro.
+Uno de los factores que limitarán la cantidad máxima de módulos esclavos que se pueden conectar será la corriente máxima que puede entregar la fuente de tensión y el regulador que se utilice en el módulo maestro.
 
 \begin{figure}[ht!]
 	\begin{center}
@@ -73,7 +73,7 @@ El chip ESP8266EX combina un microcontrolador Tensillica Xtensa L106, un RISC de
 Como se mencionó anteriormente, se necesita de flash externa para correr programas. El módulo ESP-12S se encarga de proveer al ESP8266EX 4 MiB de memoria flash.
 
 \subsection{Módulos}
-El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene una matriz de LED 8x8, un chip shifteador \cite{MAX7219} y componentes pasivos varios (ver figuras \ref{fig:hw-moduloEsquematico} y \ref{fig:hw-moduloLED}). A diferencia de un modulo esclavo, el maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite a los esclavos conectados que muestren la información.
+El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo contiene una matriz de LED 8x8, un chip controlador \cite{MAX7219} y componentes pasivos varios (ver figuras \ref{fig:hw-moduloEsquematico} y \ref{fig:hw-moduloLED}). A diferencia de los módulos esclavo, el módulo maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite dichos datos a los esclavos conectados para que muestren la información.
 
 \begin{figure}[ht!]
 	\begin{center}
@@ -91,7 +91,7 @@ El cartel se compone de módulos: un maestro y esclavos. Cada módulo contiene u
 	\end{center}
 \end{figure}
 
-El microcontrolador envía la información de a un byte por vez a el primer shifter que esta conectado a través del pin \texttt{SerialDataIn}, previamente seteando el pin \texttt{Load} en bajo y terminando la transmisión poniendo en alto. Luego de 16.5 ciclos el shifter retransmite a el esclavo más proximo, asi sucesivamente con los demás esclavos.
+El microcontrolador envía la información de a un byte por vez al primer shifter que esta conectado a través del pin \texttt{SerialDataIn}, previamente seteando el pin \texttt{Load} en bajo y terminando la transmisión poniendo en alto. Luego de 16.5 ciclos el shifter retransmite a el esclavo más proximo, asi sucesivamente con los demás esclavos.
 
 El MAX7219 recibe una secuencia de bytes (desde otro esclavo o del master) por serie y los deriva a la columna que corresponda para cada instante en la matriz de LEDs de su modulo.
 
