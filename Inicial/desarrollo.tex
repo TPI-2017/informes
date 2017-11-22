@@ -86,12 +86,20 @@ El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo co
 \begin{figure}[ht!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{imagenes/hw/moduloLED}
-		\caption{Esquema de conexiones de un módulo funcional.}
+		\caption{Esquema de conexiones de la matriz de LEDs.}
 		\label{fig:hw-moduloLED}
 	\end{center}
 \end{figure}
 
-El microcontrolador envía la información de a un byte por vez al primer shifter que esta conectado a través del pin \texttt{SerialDataIn}, previamente seteando el pin \texttt{Load} en bajo y terminando la transmisión poniendo en alto. Luego de 16.5 ciclos el shifter retransmite a el esclavo más proximo, asi sucesivamente con los demás esclavos.
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{imagenes/hw/diagrama-bloques-general}
+		\caption{Esquema general entre todos los componentes del sistema.}
+		\label{fig:hw-moduloLED}
+	\end{center}
+\end{figure}
+
+El microcontrolador envía la información de a un byte por vez al primer shifter que esta conectado a través del pin \texttt{SerialDataIn} (pin 1, ver figura \ref{fig:hw-moduloEsquematico}), previamente seteando el pin \texttt{Load} en bajo y terminando la transmisión poniendo en alto. Luego de 16.5 ciclos el shifter retransmite a el esclavo más proximo, asi sucesivamente con los demás esclavos. 
 
 El MAX7219 recibe una secuencia de bytes (desde otro esclavo o del master) por serie y los deriva a la columna que corresponda para cada instante en la matriz de LEDs de su modulo.
 
