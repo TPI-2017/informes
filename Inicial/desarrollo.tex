@@ -14,11 +14,11 @@ Surge así la idea de desarrollar de un cartel electrónico reutilizable, capaz 
 El objetivo principal del proyecto es implementar un cartel de LEDs que pueda ser configurado remotamente por un usuario.
 El mismo se puede subdividir en subobjetivos, los cuales se mencionan a continuación:
 
-Diseñar e implementar el Hardware (PCB, matrices de LEDs) del cartel para que visualice correctamente el mensaje configurado. Deberá ser modularizable, es decir, que sea posible agregar módulos funcionales y expandir la cantidad de caracteres en un renglón.
+Diseñar e implementar el Hardware (PCB, matrices de LEDs) del cartel para que visualice correctamente el mensaje configurado. Deberá ser modular, es decir, que sea posible agregar letras, expandiendo la cantidad de caracteres en un renglón.
 
 Desarrollar el software embebido que se ejecutará en el microcontrolador.
 
-Desarrollar el software que controla el cartel. Éste podrá ser usado desde una pc y tendrá una interfaz gráfica con formato de panel para controlar las características del mensaje a mostrar por el cartel.
+Desarrollar el software que controla el cartel. Éste podrá ser usado desde una PC y tendrá una interfaz gráfica con formato de panel para controlar las características del mensaje a mostrar por el cartel.
 
 Diseñar e implementar protocolo de comunicación para la comunicación entre el software controlador del panel y el cartel. El protocolo debe establecer un método de autenticación que impida el acceso de personal no autorizado al cartel. Esto implica que sea seguro antes ataque del tipo \emph{man-in-the-middle} y otros tipos de ataques bien conocidos.
 
@@ -28,23 +28,21 @@ Diseñar e implementar protocolo de comunicación para la comunicación entre el
 
 \subsection{Funcionales}
 \begin{itemize}
-	\item La aplicación de escritorio deberá ser capaz de poder iniciar una conexión vía TLS con el sistema utilizando la misma para enviar los mensajes que el cliente desee. Además la aplicación será multiplataforma.
+	\item La aplicación de escritorio deberá ser capaz de poder iniciar una conexión segura con el sistema utilizando la misma para enviar los mensajes que el cliente desee.
 	\item La aplicación podrá enviar peticiones de forma de obtener el mensaje actual del cartel o incluso establecer uno nuevo. Por otra parte, también podrá pedir los datos de la red a la que el sistema estará conectado o cambiarlos.
-	\item La aplicación deberá ser capaz de modificar características tales como parpadeo (intermitencia distinguible por el ojo humano), velocidad de movimiento (tasa de pixeles por segundo que se moverá el texto cuando éste esté configurado para mostrarse desplazándose) o estaticidad (capacidad de mostrar un mensaje en su lugar sin moverlo) del mensaje.
+	\item La aplicación deberá ser capaz de modificar parámetros de animación tales como frecuencia de parpadeo y velocidad de desplazamiento lateral o estaticidad.
 	\item La aplicación permitirá al usuario, ingresar por teclado el mensaje que desea mostrar mediante los caracteres que se establecen en el estándar de codificación de caracteres ISO/IEC 8859-1 (ver \cite{CodifChar}).
-	\item El sistema (cartel) deberá ser capaz de aceptar sólo conexiones por TLS\cite{TLS} de forma que las conexiones y el intercambio de paquetes sea cifrado y seguro.
 	\item El cartel deberá poder procesar sólo mensajes a través del protocolo diseñado específicamente para este proyecto (ver Apéndice \ref{sec:protocolo})
 	\item El cartel deberá mostrar los mensajes que desee el usuario.
 	\item El cartel deberá poder almacenar y modificar sus credenciales de red de forma de poder conectarse al WiFi que el cliente desee.
-	\item El cartel deberá persistir los datos de configuración y del mensaje que muestra, aún cuando el mismo haya sido desconectado de la red inalámbrica o de la energía.
+	\item El cartel deberá mantener los datos de configuración y del mensaje que muestra, aún cuando el mismo haya sido desconectado de la red inalámbrica o de la red eléctrica.
 \end{itemize}
 
 \subsection{No funcionales}
 \begin{itemize}
-	\item El tiempo de desarrollo no debe ser mayor a 12 semanas.
 	\item El tiempo de respuesta del cartel no debe exceder los cinco segundos.
-	\item La conexión debe estar cifrada para evitar intrusiones.
-	\item El sistema entero no debe consumir mas de 30 Watts estando en operación normal.
+	\item El sistema entero no debe consumir mas de 30 Watts bajo operación normal.
+	\item El sistema deberá ser capaz de aceptar sólo conexiones por TLS \cite{TLS} de forma que las conexiones y el intercambio de paquetes sea cifrado y seguro.
 \end{itemize}
 
 \section{Diseño del hardware}
@@ -83,15 +81,41 @@ Uno de los factores que limitarán la cantidad máxima de módulos esclavos que 
 	\end{center}
 \end{figure}
 
-\subsection{Microcontrolador}
-Como controlador principal se usará el kit de desarrollo NodeMCU, que integra un AI-Thinker ESP-12S, el cual contiene un SoC (\emph{System on Chip}) ESP8266EX de la empresa Espressif. El módulo NodeMCU es hardware libre, sin embargo, el resto de los componentes mencionados no lo son.\cite{NodeMCU}
+\subsection{Controlador}
+Como controlador principal se usará el kit de desarrollo NodeMCU, que integra un AI-Thinker ESP-12E (figura \ref{fig:foto-esp12e}), el cual contiene un SoC (\emph{System on Chip}) ESP8266EX (figura \ref{fig:esp8266ex}) de la empresa Espressif. El módulo NodeMCU es hardware libre, sin embargo, el ESP12E y el ESP8266EX no lo son.\cite{NodeMCU}
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=8cm]{imagenes/esp12e-foto.jpg}
+		\caption{Foto del módulo ESP12E sin su cubrimiento.}
+		\label{fig:foto-esp12e}
+	\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=3cm]{imagenes/esp8266ex.jpg}
+		\caption{Foto del integrado ESP8266EX.}
+		\label{fig:esp8266ex}
+	\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=12cm]{imagenes/nodemcu-pinout.pdf}
+		\caption{Asignación de pines del NodeMCU.}
+		\label{fig:nodemcu-pinout}
+	\end{center}
+\end{figure}
+
+Es importante tener en cuenta que el sistema no integra en su hardware directamente ni el ESP12E ni el ESP8266EX, sino que integra el NodeMCU, cuya asignación de pines se puede ver en la figura \ref{fig:nodemcu-pinout}.
 
 El chip ESP8266EX combina un microcontrolador Tensillica Xtensa L106, un RISC de 32 bits corriendo a 80 Mhz, con funcionalidad WiFi. \cite{ESP8266Datasheet} El chip tiene memoria ROM con firmware no removible, y puede correr programas almacenados en flash externa. Para poder usar todas sus funcionalidades, se debe programar sobre firmware privativo desarrollado por Espressif, esto implica que el programa de usuario corre en simultáneo con el firmware y el uso de la memoria de trabajo está sujeto a la versión del firmware. Según el datasheet, el usuario puede esperar tener disponible 50 KiB de SRAM.
 
 Como se mencionó anteriormente, se necesita de flash externa para correr programas. El módulo ESP-12S se encarga de proveer al ESP8266EX 4 MiB de memoria flash.
 
 \subsection{Módulos}
-El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo contiene una matriz de LED 8x8, un chip controlador \cite{MAX7219} y componentes pasivos varios (ver figuras \ref{fig:hw-moduloEsquematico} y \ref{fig:hw-moduloLED}). A diferencia de los módulos esclavo, el módulo maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite dichos datos a los esclavos conectados para que muestren la información.
+El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo contiene una matriz de LED 8x8, un chip controlador \cite{MAX7219} y componentes pasivos varios (ver figuras \ref{fig:hw-moduloEsquematico} y \ref{fig:hw-moduloLED}). A diferencia de los módulos esclavo, el módulo maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario (ver figura \ref{fig:hw-diagrama-general}), procesa la información codificando los caracteres y transmite dichos datos a los esclavos conectados para que muestren la información.
 
 \begin{figure}[ht!]
 	\begin{center}
@@ -104,12 +128,21 @@ El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo co
 \begin{figure}[ht!]
 	\begin{center}
 		\includegraphics[width=0.8\textwidth]{imagenes/hw/moduloLED}
-		\caption{Esquema de conexiones de un módulo funcional.}
+		\caption{Esquema de conexiones de la matriz de LEDs.}
 		\label{fig:hw-moduloLED}
 	\end{center}
 \end{figure}
 
-El microcontrolador envía la información de a un byte por vez al primer shifter que esta conectado a través del pin \texttt{SerialDataIn}, previamente seteando el pin \texttt{Load} en bajo y terminando la transmisión poniendo en alto. Luego de 16.5 ciclos el shifter retransmite a el esclavo más proximo, asi sucesivamente con los demás esclavos.
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{imagenes/hw/diagrama-bloques-general}
+		\caption{Esquema general entre todos los componentes del sistema.}
+		\label{fig:hw-diagrama-general}
+	\end{center}
+\end{figure}
+
+
+El microcontrolador envía la información de a un byte por vez al primer shifter que esta conectado a través del pin \texttt{SerialDataIn} (pin 1, ver figura \ref{fig:hw-moduloEsquematico}), previamente seteando el pin \texttt{Load} en bajo y terminando la transmisión poniendo en alto. Luego de 16.5 ciclos el shifter retransmite a el esclavo más proximo, asi sucesivamente con los demás esclavos. 
 
 El MAX7219 recibe una secuencia de bytes (desde otro esclavo o del master) por serie y los deriva a la columna que corresponda para cada instante en la matriz de LEDs de su modulo.
 
@@ -157,9 +190,18 @@ El comportamiento del microcontrolador puede describirse como una máquina de es
 	\end{center}
 \end{figure}
 
-El ESP8266 se puede programar utilizando el SDK de la empresa que desarrolló el chip, Espressif. Existen dos versiones del SDK, una basada en FreeRTOS, lo cual permite tener tareas en ejecución simultánea, y otra que no está basada en tareas, sino que todo el código del usuario consiste en \emph{callbacks} que se ejecutan de forma cooperativa y deben retornar rápidamente.
+El ESP8266 se puede programar utilizando el SDK de la empresa que desarrolló el chip, Espressif. Existen dos versiones del SDK, una basada en FreeRTOS, lo cual permite tener tareas en ejecución simultánea, y otra que no está basada en tareas, sino que todo el código del usuario consiste en \emph{callbacks} que se ejecutan de forma cooperativa y deben retornar rápidamente. Un ejemplo de esta técnica de programación se puede ver en la figura \ref{fig:callbacks}, donde se muestra como se registra la función que debe ejecutarse al recibir datos a través de una conexión TCP sobre 802.11. La aplicación llama a \code{espconn\_regist\_recvcb}, pasándole un puntero a función a \code{callback} y el firmware se encarga de llamar a \code{callback} cuando corresponda.
 
-Se decidió utilizar la versión basada en \emph{callbacks} ya que elimina muchos problemas de programación concurrente al asegurar que las funciones siempre se ejecutan de forma aparentemente atómica. (salvo posiblemente por interrupciones que el firmware utiliza internamente).
+\begin{figure}[ht!]
+	\begin{center}
+		\centering
+		\includegraphics[scale=0.8]{imagenes/callbacks.pdf}
+		\caption{Ejemplo de uso de callbacks.}
+		\label{fig:callbacks}
+	\end{center}
+\end{figure}
+
+Se decidió utilizar la versión basada en \emph{callbacks} ya que elimina muchos problemas de programación concurrente al asegurar que las funciones siempre se ejecutan de forma aparentemente atómica. (salvo posiblemente por interrupciones que el firmware utilice internamente pero no interfieran con la lógica del programa).
 
 \subsubsection{Almacenamiento de los caracteres}
 
