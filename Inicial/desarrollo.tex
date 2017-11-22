@@ -51,9 +51,27 @@ Diseñar e implementar protocolo de comunicación para la comunicación entre el
 % Describir el hardware propuesto, comenzando por un diagrama en bloques, luego una descripción de las Interfaces eléctricas
 % (conexiones poncho-EDU-CIAA) y de usuario (teclado, displays, etc)
 % hasta llegar al detalle fino de los componentes y circuitos a utilizar y sus características.
-El hardware está compuesto por módulos. Cada módulo es un dispositivo independiente que está armado con una matriz de LEDs de 8x8, un chip controlador \cite{MAX7219} encargado de actualizar el estado de cada LED en función del caracter mostrado y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). 
+El hardware está compuesto por módulos. Cada módulo puede encargarse o bien de la lógica o bien de la adaptación de la misma a la visualización del mensaje, según el tipo de módulo. Los módulos están armados con matrices de LEDs de 8x8, chips controladores \cite{MAX7219} encargados de actualizar el estado de cada LED en función del caracter mostrado y componentes pasivos varios (ver figura \ref{fig:hw-moduloEsquematico}). 
 
-Hay dos tipos de módulos: un maestro y un esclavo. El módulo maestro cuenta con un microcontrolador, reguladores de tensión, un conector expuesto al usuario y teclas de reset de comunicación (reinicia la configuracion Wi-Fi) y de alimentación (reinicia la alimentación del microcontrolador). Los módulos esclavos no llevan microcontrolador, sino que en cambio cuentan con dos conectores (uno de entrada y uno de salida) para poder conectar secuencialmente varios esclavos en \emph{daisy-chain}, como se ilustra en la figura \ref{fig:esquema-general}.
+Hay dos tipos de módulos: un maestro y un esclavo. El módulo maestro cuenta con un microcontrolador, reguladores de tensión, un conector expuesto al usuario y teclas de reset de comunicación (reinicia la configuracion Wi-Fi) y de alimentación (reinicia la alimentación del microcontrolador). Un solo módulo maestro puede controlar N módulos esclavos. Se puede observar su circuito en la figura \ref{fig:master}.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[scale=0.8]{imagenes/hw/master.pdf}
+		\caption{Circuito del módulo maestro}
+		\label{fig:master}
+	\end{center}
+\end{figure}
+
+Los módulos esclavos no llevan microcontrolador, sino que en cambio cuentan con dos conectores (uno de entrada y uno de salida) para poder conectar secuencialmente varios esclavos en \emph{daisy-chain}, como se ilustra en la figura \ref{fig:esquema-general}. Dichos conectores transmiten la alimentación y las señales necesarias para la emisión sincronizada del mensaje entre todos los esclavos. La totalidad de los componentes del módulo puede verse en la figura \ref{fig:slave}.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\includegraphics[scale=0.8]{imagenes/hw/slave.pdf}
+		\caption{Circuito del módulo esclavo}
+		\label{fig:slave}
+	\end{center}
+\end{figure}
 
 Uno de los factores que limitarán la cantidad máxima de módulos esclavos que se pueden conectar será la corriente máxima que puede entregar la fuente de tensión y el regulador que se utilice en el módulo maestro.
 
