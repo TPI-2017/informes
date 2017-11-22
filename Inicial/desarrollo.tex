@@ -73,7 +73,7 @@ El chip ESP8266EX combina un microcontrolador Tensillica Xtensa L106, un RISC de
 Como se mencionó anteriormente, se necesita de flash externa para correr programas. El módulo ESP-12S se encarga de proveer al ESP8266EX 4 MiB de memoria flash.
 
 \subsection{Módulos}
-El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo contiene una matriz de LED 8x8, un chip controlador \cite{MAX7219} y componentes pasivos varios (ver figuras \ref{fig:hw-moduloEsquematico} y \ref{fig:hw-moduloLED}). A diferencia de los módulos esclavo, el módulo maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario, procesa la información codificando los caracteres y transmite dichos datos a los esclavos conectados para que muestren la información.
+El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo contiene una matriz de LED 8x8, un chip controlador \cite{MAX7219} y componentes pasivos varios (ver figuras \ref{fig:hw-moduloEsquematico} y \ref{fig:hw-moduloLED}). A diferencia de los módulos esclavo, el módulo maestro posee un microcontrolador NodeMCU que recibe los pedidos del usuario (ver figura \ref{fig:hw-diagrama-general}), procesa la información codificando los caracteres y transmite dichos datos a los esclavos conectados para que muestren la información.
 
 \begin{figure}[ht!]
 	\begin{center}
@@ -95,9 +95,10 @@ El cartel se compone de módulos: un maestro y esclavos. Cada módulo esclavo co
 	\begin{center}
 		\includegraphics[width=0.9\textwidth]{imagenes/hw/diagrama-bloques-general}
 		\caption{Esquema general entre todos los componentes del sistema.}
-		\label{fig:hw-moduloLED}
+		\label{fig:hw-diagrama-general}
 	\end{center}
 \end{figure}
+
 
 El microcontrolador envía la información de a un byte por vez al primer shifter que esta conectado a través del pin \texttt{SerialDataIn} (pin 1, ver figura \ref{fig:hw-moduloEsquematico}), previamente seteando el pin \texttt{Load} en bajo y terminando la transmisión poniendo en alto. Luego de 16.5 ciclos el shifter retransmite a el esclavo más proximo, asi sucesivamente con los demás esclavos. 
 
