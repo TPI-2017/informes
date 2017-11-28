@@ -1,0 +1,90 @@
+% !TeX spellcheck = es_ES
+\documentclass[a4paper, 12pt, spanish]{article}
+\usepackage[utf8]{inputenc} % Formato
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{csquotes}
+\usepackage{booktabs}
+\usepackage[spanish, mexico]{babel}
+%\usepackage[left=3cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{geometry}
+\usepackage{upquote}
+\usepackage{spreadtab}
+\usepackage{import}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[dvipsnames]{xcolor}
+\definecolor{azulOscuro}{rgb}{0.0, 0.28, 0.67}
+\definecolor{verdeCopado}{rgb}{0.13, 0.55, 0.13}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[acronym, toc, style=list]{glossaries}
+%\usepackage[xindy, acronym, toc, style=list]{glossaries}
+\makeglossaries
+\loadglsentries[main]{glosario.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{appendix}
+\renewcommand{\appendixname}{Apéndice}
+\renewcommand{\appendixtocname}{Apéndice}
+\renewcommand{\appendixpagename}{\normalfont\bfseries Apéndice}
+\usepackage{etoolbox} % we load it for the workaround
+% workaround
+\makeatletter
+\appto{\appendices}{\def\Hy@chapapp{Appendix}}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+\input{headerlisting.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{hyperref} % Es para la url o el indice
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=verdeCopado,
+	filecolor=PineGreen,
+	urlcolor=azulOscuro,
+	linktoc=all,
+	pdftitle={Informe de proyecto 1}
+}
+\usepackage{cite}
+\usepackage{apacite}
+\bibliographystyle{apacite}
+\AtBeginDocument{
+	\renewcommand{\BBOP}{[}
+	\renewcommand{\BBCP}{]}
+}
+
+\input{init_caratula.tex}
+\usepackage{wrapfig}
+\usepackage[scaled=1]{helvet}
+
+\newcommand{\code}[1]{\mbox{#1}}
+
+\begin{document}
+	\renewcommand\refname{Bibliografías} % Para cambiar el nombre referencias a Bibliografias.
+	\hypersetup{pageanchor=false}
+	\maketitle
+	\tableofcontents % indice de contenidos
+	\addtocontents{toc}{\protect\thispagestyle{empty}}
+	\clearpage
+	\hypersetup{pageanchor=true}
+
+	\setcounter{page}{1}
+	\input{desarrollo.tex}
+
+	\clearpage
+	\printglossary[type=\acronymtype, title=Siglas y acrónimos, toctitle=Siglas y acrónimos]
+ 	\printglossary[title=Glosario, toctitle=Glosario]
+
+	%\clearpage
+	\phantomsection
+	% Especificar material bibliográfico utilizado como libros, apuntes, hojas de datos, referencias de la web, sitios de descarga, etc.
+	% \addcontentsline{toc}{section}{Bibliografía}
+	% \bibliographystyle{apalike}
+	\bibliography{biblio}
+
+	% 8-Anexos
+	% Adjuntar todo el material que considere necesario como parte de la documentación del proyecto.
+	\input{apendice.tex}
+
+\end{document}
